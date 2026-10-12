@@ -1,0 +1,773 @@
+CONTINUE THE EXISTING AI SPORTS COACH PROJECT.
+
+IMPORTANT: DO NOT REBUILD THE WEBSITE FROM SCRATCH.
+DO NOT REMOVE OR REDESIGN the existing pages unless something is required for functionality.
+
+You have already created the AI Sports Coach interface with sport selection, badminton training activities, recording guides, video upload and analysis flow.
+
+Now I want you to move from the UI prototype toward the ACTUAL WORKING MVP.
+
+==================================================
+1. PRODUCT VISION
+==================================================
+
+The product is:
+
+AI SPORTS COACH
+
+It is a universal AI-assisted sports coaching platform intended to help beginners and athletes who cannot afford professional coaching.
+
+The platform should eventually support:
+
+- Badminton
+- Cricket
+- Football
+- Basketball
+- Tennis
+- Athletics
+- Other sports in the future
+
+IMPORTANT:
+
+The overall product must remain UNIVERSAL.
+
+Do NOT rename it to "AI Badminton Coach".
+
+Badminton is simply the FIRST sport being implemented.
+
+The architecture must allow other sports to be added later without rebuilding the application.
+
+==================================================
+2. CURRENT BADMINTON MODULE
+==================================================
+
+The existing Badminton page has these five training activities:
+
+1. Footwork Analysis
+2. Smash Technique
+3. Serve Technique
+4. Defensive Movement
+5. Net Movement
+
+KEEP ALL FIVE ACTIVITIES IN THE UI.
+
+Each activity must have:
+
+- its own description
+- its own recording guide
+- its own analysis requirements
+- its own metrics
+- its own feedback logic
+
+Do NOT pretend that all five are fully implemented if they are not.
+
+==================================================
+3. IMPLEMENTATION PRIORITY
+==================================================
+
+Implement the AI analysis progressively in this order:
+
+PHASE 1:
+Badminton → Footwork Analysis
+
+PHASE 2:
+Badminton → Defensive Movement
+
+PHASE 3:
+Badminton → Net Movement
+
+PHASE 4:
+Badminton → Smash Technique
+
+PHASE 5:
+Badminton → Serve Technique
+
+For now, prioritize making PHASE 1 genuinely work end-to-end.
+
+Do not create fake scores for the other activities.
+
+If an activity is not implemented yet, show:
+
+"Analysis under development"
+
+instead of fake results.
+
+==================================================
+4. ACTUAL AI PIPELINE
+==================================================
+
+The current application currently says something similar to:
+
+"Pose processing is not available in this environment yet."
+
+REMOVE THIS LIMITATION.
+
+Implement actual computer vision.
+
+Pipeline:
+
+USER VIDEO
+↓
+VIDEO VALIDATION
+↓
+OPEN CV
+↓
+FRAME EXTRACTION
+↓
+PRE-TRAINED POSE ESTIMATION
+↓
+BODY LANDMARKS
+↓
+FEATURE EXTRACTION
+↓
+ACTIVITY-SPECIFIC ANALYSIS
+↓
+SCORING
+↓
+COACHING FEEDBACK
+↓
+RESULTS
+
+Use a pre-trained pose estimation model.
+
+Prefer MediaPipe Pose / the currently compatible MediaPipe pose solution available in the Replit environment.
+
+DO NOT train a deep-learning model from scratch.
+
+==================================================
+5. REPLIT ENVIRONMENT
+==================================================
+
+Before implementing, inspect the existing project:
+
+- identify the programming language
+- identify the existing frontend
+- identify the existing backend
+- identify the current Python version if Python is being used
+- identify the existing package manager
+- identify how the current upload endpoint works
+
+Do NOT unnecessarily replace working components.
+
+Install only the dependencies required for pose processing.
+
+If a MediaPipe version is incompatible with the current Python/runtime:
+
+1. identify the compatibility issue
+2. select a compatible version/API
+3. modify the code accordingly
+4. test it
+
+Do not simply display "pose processing unavailable".
+
+==================================================
+6. VIDEO UPLOAD
+==================================================
+
+Keep the existing upload functionality.
+
+Support:
+
+- MP4
+- MOV
+
+Validate:
+
+- file type
+- file size
+- video readability
+- video duration
+
+After upload:
+
+1. temporarily store the video
+2. process it
+3. delete temporary files when no longer needed
+
+Do not expose uploaded videos publicly.
+
+==================================================
+7. POSE DETECTION
+==================================================
+
+For every valid frame, detect the athlete.
+
+Track:
+
+- nose/head
+- shoulders
+- elbows
+- wrists
+- hips
+- knees
+- ankles
+- feet
+
+For footwork, especially track:
+
+- left ankle
+- right ankle
+- left knee
+- right knee
+- left hip
+- right hip
+- shoulders
+
+Store the landmark coordinates over time.
+
+Handle:
+
+- no person detected
+- multiple people detected
+- athlete leaving frame
+- poor visibility
+- insufficient valid frames
+
+If there is not enough reliable data, DO NOT generate a score.
+
+Instead display:
+
+"Insufficient video quality for reliable analysis."
+
+==================================================
+8. PROCESSED VIDEO
+==================================================
+
+Generate an analyzed video.
+
+Draw:
+
+- pose landmarks
+- body connections
+- left/right ankle positions
+
+The user should be able to view the processed video.
+
+This is important because the project needs visual evidence that pose detection actually happened.
+
+==================================================
+9. FOOTWORK ANALYSIS
+==================================================
+
+This is the first complete AI module.
+
+Analyze:
+
+A. FOOT PLACEMENT
+
+Track:
+
+- left/right ankle positions
+- distance between feet
+- changes in foot position
+
+B. MOVEMENT
+
+Calculate:
+
+- total movement distance
+- left foot movement
+- right foot movement
+- movement direction
+- approximate movement speed
+
+C. KNEE POSITION
+
+Calculate knee angles using:
+
+HIP → KNEE → ANKLE
+
+Calculate:
+
+- average knee angle
+- minimum knee angle
+- maximum knee angle
+
+D. BALANCE
+
+Create an explainable balance metric using:
+
+- shoulders
+- hips
+- feet
+
+E. RECOVERY
+
+Estimate how effectively the player returns toward the center after moving away.
+
+Keep this first implementation simple and explainable.
+
+Do NOT claim professional biomechanical accuracy.
+
+==================================================
+10. FOOTWORK SCORING
+==================================================
+
+Create a transparent rule-based scoring system.
+
+Metrics:
+
+- Footwork
+- Balance
+- Knee Position
+- Recovery
+
+Each score should be 0–100.
+
+Calculate an overall score.
+
+IMPORTANT:
+
+Scores must come from actual measurements.
+
+NEVER generate random scores.
+
+If a metric cannot be reliably calculated:
+
+"Insufficient data"
+
+Do not fabricate results.
+
+==================================================
+11. COACHING FEEDBACK
+==================================================
+
+Feedback must be based on the actual calculated metrics.
+
+Example:
+
+If recovery is weak:
+
+"Your recovery movement appears slower than expected after reaching the movement point."
+
+Suggestion:
+
+"Focus on returning toward the center immediately after reaching the movement position."
+
+If balance is weak:
+
+"Your body position becomes less stable during movement."
+
+Suggestion:
+
+"Focus on maintaining control through your hips and knees while changing direction."
+
+If knee position is weak:
+
+"Your knee position changes significantly during the drill."
+
+Suggestion:
+
+"Practice maintaining a controlled knee bend throughout the movement."
+
+Do not randomly select feedback.
+
+==================================================
+12. RESULTS PAGE
+==================================================
+
+Keep the existing results design but connect it to REAL analysis data.
+
+Display:
+
+AI SPORTS COACH
+
+Badminton
+Footwork Analysis
+
+OVERALL SCORE
+XX / 100
+
+METRICS:
+
+Footwork
+XX / 100
+
+Balance
+XX / 100
+
+Knee Position
+XX / 100
+
+Recovery
+XX / 100
+
+Then:
+
+WHAT YOU'RE DOING WELL
+
+AREAS TO IMPROVE
+
+AI COACHING FEEDBACK
+
+RECOMMENDED PRACTICE
+
+Also show:
+
+- video duration
+- frames processed
+- valid pose frames
+- athlete detection status
+
+Show the processed video.
+
+==================================================
+13. OTHER BADMINTON ACTIVITIES
+==================================================
+
+Keep these activities visible:
+
+--------------------------------
+SMASH TECHNIQUE
+--------------------------------
+
+Future analysis should consider:
+
+- shoulder position
+- elbow position
+- wrist position
+- arm extension
+- body rotation
+- hip movement
+- lower-body stability
+- recovery
+
+Possible result metrics:
+
+- Preparation
+- Arm Position
+- Body Rotation
+- Balance
+- Recovery
+
+Do not claim racket speed or shuttle speed unless actually measurable.
+
+--------------------------------
+SERVE TECHNIQUE
+--------------------------------
+
+Future analysis:
+
+- stance
+- shoulder position
+- elbow/wrist preparation
+- balance
+- movement consistency
+- recovery
+
+--------------------------------
+DEFENSIVE MOVEMENT
+--------------------------------
+
+Future analysis:
+
+- ready position
+- knee bend
+- lateral movement
+- balance
+- foot placement
+- recovery
+
+--------------------------------
+NET MOVEMENT
+--------------------------------
+
+Future analysis:
+
+- forward movement
+- foot placement
+- balance
+- knee position
+- recovery
+
+For activities not yet implemented:
+
+Show "Analysis under development".
+
+==================================================
+14. ACTIVITY-SPECIFIC RECORDING GUIDES
+==================================================
+
+Each activity should have its own recording instructions.
+
+FOOTWORK:
+
+- stable smartphone
+- full body visible
+- sufficient space
+- good lighting
+- perform the specified footwork drill
+
+SMASH:
+
+- full body visible
+- enough overhead/side space
+- camera stable
+- perform controlled overhead movements
+
+SERVE:
+
+- full serving motion visible
+- stable camera
+- enough space
+
+DEFENSIVE MOVEMENT:
+
+- full body visible
+- enough lateral space
+- perform defensive movement drill
+
+NET MOVEMENT:
+
+- full body visible
+- camera positioned to capture forward/backward movement
+
+Keep these instructions activity-specific.
+
+==================================================
+15. STRUCTURE THE CODE MODULARLY
+==================================================
+
+Do not put all analysis in one giant file.
+
+Use a structure similar to:
+
+analysis/
+    common/
+        pose_detection.py
+        landmarks.py
+        geometry.py
+
+    badminton/
+        footwork.py
+        defensive.py
+        net_movement.py
+        smash.py
+        serve.py
+
+    scoring/
+        scoring.py
+
+    feedback/
+        feedback.py
+
+The exact structure can follow the existing project if it already has a good architecture.
+
+The important requirement is separation between:
+
+COMMON POSE DETECTION
+
+and
+
+SPORT/ACTIVITY-SPECIFIC ANALYSIS.
+
+==================================================
+16. FUTURE MULTI-SPORT ARCHITECTURE
+==================================================
+
+The same architecture should eventually support:
+
+Badminton
+→ Footwork
+→ Smash
+→ Serve
+→ Defense
+→ Net
+
+Cricket
+→ Batting
+→ Bowling
+→ Fielding
+
+Football
+→ Dribbling
+→ Shooting
+→ Passing
+→ Sprinting
+
+Basketball
+→ Shooting
+→ Dribbling
+→ Footwork
+
+Tennis
+→ Serve
+→ Forehand
+→ Backhand
+→ Footwork
+
+Do NOT implement these other sports now.
+
+But make the architecture expandable.
+
+==================================================
+17. SINGLE SMARTPHONE CONSTRAINT
+==================================================
+
+The target user should have only:
+
+ONE ordinary smartphone.
+
+Do not require:
+
+- multiple cameras
+- professional cameras
+- special sensors
+- expensive equipment
+
+Because the camera has a limited field of view, the system should analyze STRUCTURED TRAINING DRILLS rather than entire matches.
+
+The recording guide should tell the user how to position the phone.
+
+Do not claim that one phone can reliably analyze an entire football field or complete match.
+
+==================================================
+18. DATASET STRATEGY
+==================================================
+
+Do NOT build a huge custom dataset now.
+
+Do NOT require thousands of training videos.
+
+The first implementation uses:
+
+Pre-trained pose estimation
++
+Feature extraction
++
+Transparent rule-based scoring
+
+For later research and improvement, the project can use legitimate public sports datasets and a small set of test videos.
+
+The system should be designed so a future labeled dataset can be added to train a custom model.
+
+==================================================
+19. PRIVACY
+==================================================
+
+Uploaded videos should be treated as private.
+
+Use temporary storage where possible.
+
+Delete temporary files after processing.
+
+Do not collect unnecessary personal information.
+
+Do not expose uploaded videos through public URLs.
+
+==================================================
+20. ERROR HANDLING
+==================================================
+
+Provide useful errors for:
+
+- invalid video
+- unsupported format
+- file too large
+- unreadable video
+- no person detected
+- multiple people detected
+- body partially outside frame
+- insufficient pose frames
+- processing failure
+
+Give the user a clear suggestion for how to record again.
+
+==================================================
+21. DO NOT FAKE FUNCTIONALITY
+==================================================
+
+This is critical.
+
+Do not:
+
+- create random scores
+- create fake AI feedback
+- claim pose detection happened when it didn't
+- display placeholder values as real results
+- pretend an unfinished activity is implemented
+
+If something is not implemented:
+
+"Analysis under development"
+
+If data is insufficient:
+
+"Insufficient data for reliable analysis"
+
+==================================================
+22. TESTING
+==================================================
+
+After implementation, actually test the complete pipeline using a real badminton practice video.
+
+Test:
+
+1. Upload
+2. Video validation
+3. Frame extraction
+4. Pose detection
+5. Landmark extraction
+6. Ankle tracking
+7. Feature calculation
+8. Scoring
+9. Feedback
+10. Processed video
+11. Results display
+
+Fix all runtime errors you encounter.
+
+Do not stop at creating the code.
+
+The application must actually run.
+
+==================================================
+23. FINAL SUCCESS CONDITION
+==================================================
+
+The first complete working flow should be:
+
+User opens AI Sports Coach
+        ↓
+Selects Badminton
+        ↓
+Selects Footwork Analysis
+        ↓
+Reads recording guide
+        ↓
+Uploads a real video
+        ↓
+Video is processed
+        ↓
+Pose skeleton appears
+        ↓
+Feet are tracked
+        ↓
+Movement metrics are calculated
+        ↓
+Footwork score is calculated
+        ↓
+Strengths/weaknesses are identified
+        ↓
+Coaching feedback is generated
+        ↓
+Processed video + results are displayed
+
+This is the most important milestone.
+
+DO NOT spend the next iteration only improving colors, animations, cards or landing-page design.
+
+The UI already exists.
+
+Now prioritize the ACTUAL COMPUTER-VISION IMPLEMENTATION.
+
+When finished, tell me:
+
+1. Which pose-estimation library/version you used.
+2. Which files you changed.
+3. Which dependencies you installed.
+4. Whether a real test video was successfully processed.
+5. How many valid pose frames were detected.
+6. What metrics are currently calculated.
+7. Which badminton activities are actually implemented.
+8. Any remaining limitations.

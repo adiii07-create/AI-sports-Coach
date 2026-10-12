@@ -1,0 +1,1 @@
+"""Shared pose and geometry utilities."""

@@ -1,0 +1,299 @@
+I want to CONTINUE from the existing project you have already built.
+
+IMPORTANT:
+Do NOT rebuild the website.
+Do NOT replace the existing UI.
+Do NOT redesign the existing pages.
+Do NOT remove any existing features or screens.
+
+The UI/UX and overall structure you already created are good. From this point onward, I want us to focus on implementing the REAL functionality behind the existing interface.
+
+Our project goal is:
+
+AI SPORTS COACH — an affordable AI-assisted training platform for grassroots athletes who cannot afford regular professional coaching.
+
+The website should remain UNIVERSAL/MULTI-SPORT in its structure.
+
+The current UI already has sport/activity selection and badminton training activities. Keep that architecture because we will add football, cricket, basketball, etc. in the future.
+
+For the FIRST working MVP, implement only:
+
+BADMINTON → FOOTWORK ANALYSIS
+
+Do not implement the other sports yet.
+
+==================================================
+CURRENT USER FLOW
+==================================================
+
+Keep the existing flow:
+
+Home
+→ Sport Selection
+→ Badminton
+→ Activity Selection
+→ Footwork Analysis
+→ Recording Guide
+→ Upload Video
+→ Analysis
+→ Results
+
+We now need to make this flow actually work instead of being only a UI.
+
+==================================================
+VIDEO UPLOAD REQUIREMENTS
+==================================================
+
+For Badminton Footwork Analysis:
+
+Minimum video duration: 5 seconds
+Maximum video duration: 60 seconds
+Recommended duration: 15–30 seconds
+
+The user should be told to record:
+
+"6 side-to-side movements"
+
+Recording requirements:
+
+- one athlete
+- full body visible
+- stable smartphone
+- approximately waist-height camera
+- sufficient lighting
+- enough space
+- one continuous video
+
+Before analysis, validate the uploaded video.
+
+==================================================
+INVALID VIDEO HANDLING
+==================================================
+
+This is VERY IMPORTANT.
+
+Do NOT give a score to every uploaded video.
+
+If the video:
+
+- is too short
+- is longer than 60 seconds
+- cannot be read
+- contains no detectable person
+- contains multiple people
+- does not contain enough visible body landmarks
+- clearly does not resemble the requested footwork drill
+
+then STOP the analysis.
+
+Show a friendly message such as:
+
+"⚠️ This video doesn't appear to match the Footwork drill."
+
+"We couldn't identify the expected side-to-side movement."
+
+"Please record the drill shown in the recording guide and upload the video again."
+
+Provide:
+
+[Upload Another Video]
+
+[View Recording Guide]
+
+Similarly, for technical problems:
+
+"Your video is too long. Please upload a video no longer than 60 seconds."
+
+"We couldn't reliably detect your full body. Please reposition the camera and record again."
+
+NEVER generate a random score for an invalid video.
+
+==================================================
+REAL COMPUTER VISION
+==================================================
+
+Now implement actual computer-vision processing.
+
+Do NOT simulate AI results.
+
+Use a suitable pre-trained human pose estimation solution such as:
+
+MediaPipe Pose / Pose Landmarker
+
+Use OpenCV for video/frame processing if appropriate.
+
+Do NOT train a pose model from scratch.
+
+For each usable frame, obtain body landmarks.
+
+We especially need:
+
+- hips
+- knees
+- ankles
+- shoulders
+
+Track the ankle positions across frames because this is our first footwork analysis.
+
+==================================================
+FOOTWORK ANALYSIS
+==================================================
+
+For the first MVP calculate REAL, explainable measurements.
+
+Analyze:
+
+1. Foot movement
+2. Left/right lateral movement
+3. Movement consistency
+4. Balance/stability
+5. Knee angle
+6. Recovery toward the center
+7. Number of detectable movement repetitions
+
+Do not invent values.
+
+Do not hardcode scores such as 75, 80, etc.
+
+Scores must be calculated from the actual video/landmarks.
+
+==================================================
+RESULTS
+==================================================
+
+Connect the real analysis to the existing results UI.
+
+Show something like:
+
+FOOTWORK ANALYSIS
+
+Overall Score
+XX / 100
+
+Footwork
+XX / 100
+
+Balance
+XX / 100
+
+Knee Position
+XX / 100
+
+Recovery
+XX / 100
+
+Then show:
+
+Strengths
+
+Areas to Improve
+
+AI Coaching Feedback
+
+Recommended Practice
+
+Also show useful technical information where appropriate:
+
+Video duration
+Frames processed
+Valid pose frames
+Detection status
+
+If there is insufficient data, say:
+
+"Insufficient video data for reliable analysis."
+
+Do NOT fabricate a result.
+
+==================================================
+PROCESSED VIDEO
+==================================================
+
+Where technically possible, create an analyzed/processed version of the uploaded video with pose landmarks drawn over the athlete.
+
+The user should be able to see that actual pose detection happened.
+
+==================================================
+ARCHITECTURE
+==================================================
+
+Keep the implementation modular.
+
+We will eventually support multiple sports.
+
+Use this conceptual architecture:
+
+COMMON COMPUTER VISION
+    ↓
+Pose Detection
+    ↓
+Body Landmarks
+    ↓
+Sport/Activity-specific Analysis
+    ↓
+Scoring
+    ↓
+Feedback
+
+For example:
+
+common/
+    pose detection
+    landmarks
+    geometry
+
+badminton/
+    footwork
+    smash
+    serve
+    defensive movement
+    net movement
+
+Later:
+
+football/
+cricket/
+basketball/
+etc.
+
+Do NOT implement those future sports now.
+
+==================================================
+IMPORTANT
+==================================================
+
+Before making major changes, inspect the existing project and understand how the current UI, upload flow and backend are implemented.
+
+Reuse what already exists.
+
+Do not replace working code unnecessarily.
+
+Do not change the visual design unless required to connect the functionality.
+
+The goal of this iteration is:
+
+EXISTING UI
++
+REAL VIDEO UPLOAD
++
+VIDEO VALIDATION
++
+REAL POSE DETECTION
++
+BASIC REAL FOOTWORK ANALYSIS
++
+REAL RESULTS
+
+Start by inspecting the existing implementation and then implement this incrementally.
+
+After making changes, run/test the application and tell me exactly:
+
+1. What you found in the existing project
+2. What files you changed
+3. What dependencies you added
+4. What functionality is now working
+5. What is still not implemented
+6. Any technical limitations or errors
+7. How I can test the new functionality from the existing UI
+
+Do NOT fake any AI functionality.

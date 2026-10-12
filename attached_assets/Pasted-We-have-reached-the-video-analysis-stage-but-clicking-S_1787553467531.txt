@@ -1,0 +1,55 @@
+We have reached the video analysis stage, but clicking "Start analysis" gives this error:
+
+HTTP 422 : spawn /home/.pythonlibs/bin/python ENOENT
+
+The uploaded video is:
+uhd_25fps (1).mp4
+11.3 MB
+and the UI says "Ready to check".
+
+Do NOT change the UI or rebuild the project.
+
+Please diagnose and fix the Python runtime/environment configuration.
+
+IMPORTANT:
+1. Inspect the current Replit project and determine how Python is being invoked.
+2. Check whether the project is hardcoding:
+   /home/.pythonlibs/bin/python
+3. Do NOT assume that path exists.
+4. Find the actual Python executable available in the current Replit environment.
+5. Use the correct/current Python runtime mechanism for Replit.
+6. Check the existing package/dependency configuration.
+7. Make sure the Python environment contains the packages required for our video analysis, particularly:
+   - OpenCV
+   - MediaPipe (or the pose library currently selected)
+   - NumPy
+8. If the current MediaPipe version is incompatible with the available Python version, choose a compatible version rather than creating a workaround that only hides the error.
+9. Update the backend/process execution code so that video analysis invokes the correct Python runtime.
+10. Do not fake the analysis or return mock scores.
+
+After fixing it, actually test the "Start analysis" flow with the uploaded video if possible.
+
+The expected pipeline is:
+
+Upload video
+→ Start analysis
+→ Python process starts successfully
+→ OpenCV reads video
+→ Pose estimation runs
+→ landmarks are detected
+→ footwork analysis runs
+→ real results are returned
+
+If another error occurs after fixing the Python runtime, continue debugging that actual error.
+
+At the end, tell me:
+- root cause of the ENOENT error
+- files changed
+- Python runtime/path now being used
+- dependencies installed
+- whether the uploaded video was successfully processed
+- any remaining error
+
+Do not redesign the frontend.
+Do not replace the existing application.
+Fix the underlying implementation.

@@ -1,0 +1,195 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: coaching
+    description: Sports coaching catalog and analysis
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /sports:
+    get:
+      operationId: listSports
+      tags: [coaching]
+      summary: List supported sports
+      responses:
+        "200":
+          description: Supported sports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Sport"
+  /sports/{sportSlug}/activities:
+    get:
+      operationId: listActivities
+      tags: [coaching]
+      summary: List training activities for a sport
+      parameters:
+        - name: sportSlug
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Training activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+  /analysis:
+    post:
+      operationId: analyzeVideo
+      tags: [coaching]
+      summary: Analyze a structured sports drill video
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalysisInput"
+      responses:
+        "200":
+          description: Analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AnalysisResult"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /analysis/upload:
+    post:
+      operationId: uploadAnalysisVideo
+      tags: [coaching]
+      summary: Process an uploaded drill video
+      parameters:
+        - name: sportSlug
+          in: header
+          required: true
+          schema: { type: string }
+        - name: activitySlug
+          in: header
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          video/mp4: { schema: { type: string, format: binary } }
+          video/quicktime: { schema: { type: string, format: binary } }
+      responses:
+        "200":
+          description: Processed analysis result
+          content:
+            application/json:
+              schema: { $ref: "#/components/schemas/AnalysisResult" }
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    Sport:
+      type: object
+      properties:
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        status: { type: string, enum: [available, coming_soon] }
+        icon: { type: string }
+      required: [slug, name, description, status, icon]
+    Activity:
+      type: object
+      properties:
+        slug: { type: string }
+        name: { type: string }
+        description: { type: string }
+        status: { type: string, enum: [available, coming_soon] }
+        durationSeconds: { type: number }
+        instructions:
+          type: array
+          items: { type: string }
+      required: [slug, name, description, status, durationSeconds, instructions]
+    AnalysisInput:
+      type: object
+      properties:
+        sportSlug: { type: string }
+        activitySlug: { type: string }
+        videoName: { type: string }
+        videoSizeBytes: { type: number }
+      required: [sportSlug, activitySlug, videoName, videoSizeBytes]
+    Metric:
+      type: object
+      properties:
+        key: { type: string }
+        label: { type: string }
+        score: { type: ["number", "null"] }
+        value: { type: ["number", "null"] }
+        unit: { type: ["string", "null"] }
+        status: { type: string, enum: [measured, insufficient_data] }
+      required: [key, label, score, value, unit, status]
+    AnalysisResult:
+      type: object
+      properties:
+        id: { type: string }
+        status: { type: string, enum: [analysis_ready, insufficient_data, processing_unavailable] }
+        sportSlug: { type: string }
+        activitySlug: { type: string }
+        overallScore: { type: ["number", "null"] }
+        metrics:
+          type: array
+          items: { $ref: "#/components/schemas/Metric" }
+        strengths:
+          type: array
+          items: { type: string }
+        improvements:
+          type: array
+          items: { type: string }
+        feedback:
+          type: array
+          items: { type: string }
+        practice:
+          type: array
+          items: { type: string }
+        processedVideoUrl: { type: ["string", "null"] }
+        note: { type: string }
+        videoDurationSeconds: { type: ["number", "null"] }
+        framesProcessed: { type: number }
+        validPoseFrames: { type: number }
+        detectionStatus: { type: string }
+      required: [id, status, sportSlug, activitySlug, overallScore, metrics, strengths, improvements, feedback, practice, processedVideoUrl, note]
+    ErrorResponse:
+      type: object
+      properties:
+        error: { type: string }
+      required: [error]
+

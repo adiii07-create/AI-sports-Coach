@@ -1,0 +1,428 @@
+I want you to give me a COMPLETE technical explanation of how this project was planned, designed, implemented, and deployed.
+
+Please inspect the actual project files/code and do NOT give me a generic explanation. I want the explanation to reflect what is REALLY implemented in this project.
+
+Organize your response into the following sections:
+
+### 1. PROJECT OVERVIEW
+
+* What is the purpose of this project?
+* What problem does it solve?
+* Who are the target users?
+* What is the complete user workflow from uploading a video to receiving the final result?
+* What features are currently implemented?
+* Which features are only UI/planned and are NOT actually implemented?
+
+### 2. ORIGINAL PROJECT PLANNING
+
+Explain how the project architecture was planned.
+
+* What was the reasoning behind the architecture?
+* What modules/components were planned?
+* What decisions were made regarding video processing, pose estimation, feature extraction, scoring, and feedback?
+* What assumptions were made?
+* What limitations were considered?
+
+### 3. COMPLETE TECH STACK
+
+List EVERYTHING used in the project.
+
+Separate it into:
+
+* Frontend
+* Backend
+* Programming languages
+* Frameworks
+* Libraries
+* AI/ML libraries
+* Computer vision libraries
+* Pose estimation technology
+* Video processing technology
+* Database (if any)
+* APIs
+* File storage
+* Authentication (if any)
+* Deployment
+* Hosting
+* Build tools
+* Package managers
+
+For every technology, explain exactly WHY it is being used.
+
+### 4. PROJECT ARCHITECTURE
+
+Give me the complete architecture of the system.
+
+Explain:
+
+User
+↓
+Frontend
+↓
+Video Upload
+↓
+Backend
+↓
+Video Validation
+↓
+Pose Estimation
+↓
+Landmark Extraction
+↓
+Feature Extraction
+↓
+Scoring/ML
+↓
+Feedback
+↓
+Frontend Results
+
+Modify this flow if the actual implementation is different.
+
+Also explain which files/modules perform each step.
+
+### 5. FILE-BY-FILE EXPLANATION
+
+Inspect the repository and give me:
+
+* File/folder name
+* Purpose
+* Important functions/classes
+* How it connects to other files
+
+Especially identify the files responsible for:
+
+* Video upload
+* Video validation
+* Video preprocessing
+* Pose detection
+* Landmark extraction
+* Feature extraction
+* Scoring
+* ML/model inference
+* Feedback generation
+* Frontend UI
+* API/backend
+* Configuration
+* Deployment
+
+### 6. POSE ESTIMATION
+
+Explain exactly how pose estimation works in this project.
+
+Tell me:
+
+* Which pose model is used?
+* Is it MediaPipe Pose/BlazePose or something else?
+* Is it pretrained?
+* Are we training it?
+* How many landmarks are extracted?
+* Which landmarks are used?
+* What confidence thresholds are used?
+* What happens when landmarks are missing?
+* How are frames processed?
+* How are landmark coordinates normalized?
+
+### 7. FEATURES BEING ANALYZED
+
+Give me the FINAL list of features that the CURRENT CODE actually calculates.
+
+For each feature explain:
+
+* Feature name
+* Input landmarks
+* Mathematical calculation/formula
+* Why the feature matters for badminton
+* Whether it is currently implemented
+* Whether it is used in the final score
+
+Separate:
+A. Actually implemented features
+B. Planned/future features
+C. Features displayed in UI but not actually calculated
+
+Do NOT assume a feature is implemented just because there is a button or UI card for it.
+
+### 8. CURRENT SCORING SYSTEM
+
+Explain exactly how the score is calculated.
+
+For every score:
+
+* Formula
+* Inputs
+* Thresholds
+* Normalization
+* Minimum/maximum values
+* Weight
+* Why the formula was chosen
+
+Explain the calculation of:
+
+* Footwork score
+* Balance score
+* Knee position score
+* Recovery score
+* Overall score
+
+Also tell me whether these are:
+
+* ML predictions
+* Rule-based scores
+* Heuristic scores
+* Statistical scores
+* Or a combination
+
+### 9. MACHINE LEARNING
+
+This is very important.
+
+Tell me exactly:
+
+* Is there actually an ML model in this project?
+* If yes, which model?
+* What dataset was used?
+* Where did the dataset come from?
+* What are the input features?
+* What is the target/output?
+* How was the model trained?
+* Train/test split?
+* Evaluation metrics?
+* Model file?
+* How is inference performed?
+
+If there is NO trained ML model, clearly say:
+
+"NO TRAINED ML MODEL IS CURRENTLY USED"
+
+and explain what is being used instead.
+
+Do not call a rule-based scoring system an ML model.
+
+### 10. DATASET
+
+Explain exactly what datasets are currently used by the code.
+
+For each dataset:
+
+* Dataset name
+* Source
+* Purpose
+* Number/type of samples if known
+* What labels it contains
+* Whether it is actually loaded/used in the current application
+* Whether it was only considered/planned
+
+Also explain whether the project requires:
+
+* A pose-estimation dataset
+* A badminton dataset
+* A technique-specific dataset
+* A scoring/label dataset
+
+### 11. BADMINTON-SPECIFIC DESIGN
+
+Explain why the current system is suitable for badminton.
+
+What badminton actions/movements does it currently analyze?
+
+For example:
+
+* Footwork
+* Balance
+* Knee position
+* Recovery
+
+Also explain what would need to change to support:
+
+* Smash
+* Serve
+* Defensive movement
+* Net movement
+
+Would these require separate models, separate datasets, separate rules, or just additional feature-extraction modules?
+
+### 12. VIDEO PROCESSING
+
+Explain:
+
+* Supported video formats
+* Maximum/minimum duration
+* File size restrictions
+* Frame processing
+* FPS handling
+* Resolution handling
+* Camera requirements
+* Person detection
+* Full-body visibility
+* What happens if the athlete moves out of frame
+* What happens if video quality is poor
+* What happens if pose detection fails
+
+### 13. VIDEO VALIDATION
+
+Tell me exactly what validation currently exists.
+
+Can the system detect:
+
+* Wrong activity
+* Multiple people
+* Person not fully visible
+* Poor lighting
+* Camera movement
+* Athlete too far from camera
+* Athlete too close to camera
+* Insufficient duration
+* Insufficient pose landmarks
+* Wrong recording position?
+
+Separate what is actually implemented from what is recommended/planned.
+
+### 14. CURRENT LIMITATIONS
+
+Give me every important technical limitation in the current implementation.
+
+Especially:
+
+* Camera angle
+* Camera distance
+* Camera quality
+* Athlete moving out of frame
+* 2D pose limitations
+* No court coordinates
+* No real-world distance measurement
+* No true badminton stroke recognition
+* No repetition detection (if applicable)
+* Dataset limitations
+* Scoring limitations
+* Generalization limitations
+
+### 15. ACCURACY AND VALIDATION
+
+Explain how we can validate whether the system's scores are actually meaningful.
+
+What ground truth would be required?
+
+For example:
+
+* Coach ratings
+* Expert-labelled videos
+* Performance measurements
+* Multiple athletes
+* Different skill levels
+
+Tell me whether the current project has any actual accuracy measurement.
+
+### 16. SECURITY AND PRIVACY
+
+Explain:
+
+* How uploaded videos are handled
+* Where they are stored
+* Whether they are deleted
+* Whether any personal data is collected
+* Any security risks
+* File upload validation
+
+### 17. DEPLOYMENT
+
+Explain exactly how this project is deployed.
+
+* Hosting platform
+* Frontend deployment
+* Backend deployment
+* Environment variables
+* Build process
+* Runtime
+* Dependencies
+* How the application starts
+* Public URL configuration
+
+### 18. DEPENDENCY LIST
+
+Give me the important dependencies/packages and explain what each one does.
+
+Also identify versions where available.
+
+### 19. COMPLETE DATA FLOW
+
+Show one complete example:
+
+Athlete uploads video
+→ validation
+→ frame extraction
+→ pose detection
+→ landmarks
+→ feature calculation
+→ scoring
+→ final score
+→ feedback
+→ UI
+
+Use the actual implementation.
+
+### 20. WHAT IS REAL VS MOCK/PLACEHOLDER
+
+This is extremely important.
+
+Create a table:
+
+| Feature | Actually implemented? | Uses real computation? | Uses ML? | Placeholder/UI only? |
+| ------- | --------------------- | ---------------------- | -------- | -------------------- |
+
+Include every major feature.
+
+### 21. WHAT SHOULD BE IMPROVED NEXT
+
+Based on the actual code, give me a prioritized roadmap:
+
+Priority 1
+Priority 2
+Priority 3
+...
+
+Focus on making this a credible AI sports talent assessment project rather than just a UI prototype.
+
+### 22. MENTOR/VIVA EXPLANATION
+
+Finally, give me a simple explanation that I can tell my project mentor in 2-3 minutes.
+
+Include:
+
+* Problem
+* Solution
+* Tech stack
+* Dataset
+* Model
+* Features
+* Scoring
+* Architecture
+* Current limitations
+* Future improvements
+
+IMPORTANT:
+Do not invent anything.
+Inspect the actual source code and configuration files first.
+If something is not implemented, explicitly say "NOT IMPLEMENTED".
+If something is hardcoded, explicitly say "HARDCODED".
+If something is rule-based rather than ML, explicitly say "RULE-BASED".
+If something is only present in the UI but has no backend implementation, explicitly say "UI ONLY".
+
+At the end, give me a concise "PROJECT FACT SHEET" containing:
+
+Project:
+Sport:
+Frontend:
+Backend:
+Language:
+Pose Model:
+ML Model:
+Dataset:
+Features:
+Scoring Method:
+Video Processing:
+Deployment:
+Database:
+Current Implemented Features:
+Future Features:
+Main Limitations:
